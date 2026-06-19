@@ -1,117 +1,97 @@
 let teams =
 JSON.parse(
-localStorage.getItem("teams")
+  localStorage.getItem("teams")
 ) || [];
 
 let container =
 document.getElementById(
-"conflictContainer"
+  "conflictContainer"
 );
 
-if(teams.length === 0){
-
-container.innerHTML = `
-<div class="conflict-card">
-<h2>No Teams Found</h2>
-<p>
-Generate teams first.
-</p>
-</div>
-`;
-
+if (!container) {
+  console.error("conflictContainer element not found");
+  return;
 }
 
-teams.forEach((team,index)=>{
-
-let conflicts = [];
-
-let leaders =
-team.filter(
-student =>
-student.role === "Team Leader"
-);
-
-if(leaders.length > 1){
-
-conflicts.push(
-"Multiple Team Leaders"
-);
-
+if (teams.length === 0) {
+  container.innerHTML = `
+    <div class="conflict-card">
+      <h2>No Teams Found</h2>
+      <p>
+        Generate teams first.
+      </p>
+    </div>
+  `;
+  return;
 }
 
-let developers =
-team.filter(
-student =>
-student.role === "Developer"
-);
+teams.forEach((team, index) => {
+  let conflicts = [];
 
-if(developers.length === 0){
+  let leaders =
+    team.filter(
+      student =>
+      student.role === "Team Leader"
+    );
 
-conflicts.push(
-"No Developer Assigned"
-);
+  if (leaders.length > 1) {
+    conflicts.push(
+      "Multiple Team Leaders"
+    );
+  }
 
-}
-let roles =
-team.map(
-student => student.role
-);
+  let developers =
+    team.filter(
+      student =>
+      student.role === "Developer"
+    );
 
-let uniqueRoles =
-[...new Set(roles)];
+  if (developers.length === 0) {
+    conflicts.push(
+      "No Developer Assigned"
+    );
+  }
 
-if(uniqueRoles.length < roles.length){
+  let roles =
+    team.map(
+      student => student.role
+    );
 
-conflicts.push(
-"Duplicate roles detected"
-);
+  let uniqueRoles =
+    [...new Set(roles)];
 
-}
-if(conflicts.length === 0){
+  if (uniqueRoles.length < roles.length) {
+    conflicts.push(
+      "Duplicate roles detected"
+    );
+  }
 
-container.innerHTML += `
-
-<div class="success-card">
-
-<h2>
-✅ Team ${index+1}
-</h2>
-
-<p>
-No conflicts detected.
-</p>
-
-</div>
-
-`;
-
-}
-else{
-
-container.innerHTML += `
-
-<div class="conflict-card">
-
-<h2>
-⚠ Team ${index+1}
-</h2>
-
-<ul>
-
-${conflicts.map(
-c => `<li>${c}</li>`
-).join("")}
-
-</ul>
-
-<p>
-Severity: High
-</p>
-
-</div>
-
-`;
-
-}
-  
+  if (conflicts.length === 0) {
+    container.innerHTML += `
+      <div class="success-card">
+        <h2>
+          ✅ Team ${index + 1}
+        </h2>
+        <p>
+          No conflicts detected.
+        </p>
+      </div>
+    `;
+  } else {
+    container.innerHTML += `
+      <div class="conflict-card">
+        <h2>
+          ⚠ Team ${index + 1}
+        </h2>
+        <ul>
+          ${conflicts.map(
+            c => `<li>${c}</li>`
+          ).join("")}
+        </ul>
+        <p>
+          Severity: High
+        </p>
+      </div>
+    `;
+  }
 });
