@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Management | SYNERGY</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>SYNERGY</h2>
+
+<a href="students.html">👨‍🎓 Students</a> <a href="faculty.html">👨‍🏫 Faculty Dashboard</a> <a href="teams.html">👥 Teams</a> <a href="conflicts.html">⚠️ Conflicts</a>
+
+</div>
+
+<div class="main">
+
+<h1>Student Management</h1>
+
+<p class="subtitle">
+Register students and collect information for intelligent team formation.
+</p>
+
+<div class="form-card">
+
+<h2>Add New Student</h2>
+<form id="studentForm">
+
+<div class="form-group">
+
+<label>Student ID</label>
+
+<input
+type="text"
+id="studentId"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Full Name</label>
+
+<input
+type="text"
+id="name"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Degree Program</label>
+
+<input
+type="text"
+id="degree"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Main Skill</label>
+
+<select id="skill">
+
+<option>Python</option>
+<option>Java</option>
+<option>SQL</option>
+<option>UI/UX Design</option>
+<option>Testing</option>
+<option>Documentation</option>
+<option>Project Management</option>
+<option>Data Analysis</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Skill Level</label>
+
+<select id="skillLevel">
+
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Evidence Link (Optional)</label>
+
+<input
+type="text"
+id="evidence"
+placeholder="GitHub / Portfolio URL">
+
+</div>
+
+<div class="form-group">
+
+<label>Availability</label>
+
+<select id="availability">
+
+<option>Monday Morning</option>
+<option>Monday Evening</option>
+
+<option>Tuesday Morning</option>
+<option>Tuesday Evening</option>
+
+<option>Wednesday Morning</option>
+<option>Wednesday Evening</option>
+
+<option>Thursday Morning</option>
+<option>Thursday Evening</option>
+
+<option>Friday Morning</option>
+<option>Friday Evening</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Preferred Role</label>
+
+<select id="role">
+
+<option>Team Leader</option>
+<option>Developer</option>
+<option>Designer</option>
+<option>QA Tester</option>
+<option>Business Analyst</option>
+<option>Documentation Lead</option>
+
+</select>
+
+</div>
+
+<button type="submit">
+Save Student
+</button>
+
+</form>
+
+
+</div>
+
+<div class="table-section">
+
+<h2>Registered Students</h2>
+
+<button onclick="resetStudents()" class="danger-btn">
+🗑 Reset All Students
+</button>
+
+<table>
+
+<thead>
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Degree</th>
+<th>Skill</th>
+<th>Level</th>
+<th>Evidence</th>
+<th>Availability</th>
+<th>Role</th>
+<th>Actions</th>
+</tr>
+
+</thead>
+
+<tbody id="studentTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="students.js"></script>
+
+</body>
+
+</html>

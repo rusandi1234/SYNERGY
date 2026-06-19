@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>SYNERGY Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+<h1>SYNERGY</h1>
+
+<h2>Login</h2>
+
+<select id="userRole">
+
+<option value="student">
+Student
+</option>
+
+<option value="faculty">
+Faculty
+</option>
+
+</select>
+
+<input
+type="text"
+id="userId"
+placeholder="Student ID">
+
+<input
+type="password"
+id="password"
+placeholder="Faculty Password">
+
+<button onclick="login()">
+Login
+</button>
+
+</div>
+
+<script>
+
+document
+.getElementById("userRole")
+.addEventListener("change", function(){
+
+let role = this.value;
+
+if(role === "student"){
+
+document.getElementById(
+"userId"
+).style.display = "block";
+
+document.getElementById(
+"password"
+).style.display = "none";
+
+}
+else{
+
+document.getElementById(
+"userId"
+).style.display = "none";
+
+document.getElementById(
+"password"
+).style.display = "block";
+
+}
+
+});
+
+document.getElementById(
+"password"
+).style.display = "none";
+
+</script>
+
+<script src="login.js"></script>
+
+</body>
+
+</html>

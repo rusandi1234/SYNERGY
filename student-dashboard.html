@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Student Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<a href="index.html" class="sidebar-logo">
+SYNERGY
+</a>
+
+<a href="#dashboard">🏠 Dashboard</a>
+
+<a href="#myteam">👥 My Team</a>
+
+<a href="#tasks">📋 Tasks</a>
+
+<a href="login.html"
+onclick="localStorage.removeItem('currentStudent')">
+🚪 Logout </a>
+
+</div>
+
+<div class="main">
+
+<h1>Student Dashboard</h1>
+
+<!-- STUDENT PROFILE -->
+
+<div class="team-card" id="dashboard">
+
+<h2 id="studentName">
+Loading...
+</h2>
+
+<p id="studentId"></p>
+
+<p id="studentSkill"></p>
+
+<p id="studentRole"></p>
+
+<p id="studentAvailability"></p>
+
+</div>
+
+<br>
+
+<!-- TEAM SECTION -->
+
+<div class="team-card" id="myteam">
+
+<h2>👥 My Team</h2>
+
+<p id="teamName">
+Team information not available
+</p>
+
+<p id="teamScore"></p>
+
+<p id="teamStatus">
+Status: Pending ⏳
+</p>
+
+<h3>Members</h3>
+
+<ul id="teamMembers">
+
+</ul>
+
+</div>
+
+<br>
+
+<!-- TASKS SECTION -->
+
+<div class="team-card" id="tasks">
+
+<h2>📋 Tasks</h2>
+
+<ul>
+
+<li>Complete Skill Assessment ✅</li>
+
+<li>Review Team Assignment ✅</li>
+
+<li>Attend Team Meeting ⏳</li>
+
+<li>Submit Project Updates ⏳</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<script>
+
+let student =
+JSON.parse(
+localStorage.getItem(
+"currentStudent"
+)
+);
+
+if(!student){
+
+window.location =
+"login.html";
+
+}
+
+// Student Details
+
+document.getElementById(
+"studentName"
+).innerText =
+student.name;
+
+document.getElementById(
+"studentId"
+).innerText =
+"ID: " + student.studentId;
+
+document.getElementById(
+"studentSkill"
+).innerText =
+"Skill: " + student.skill;
+
+document.getElementById(
+"studentRole"
+).innerText =
+"Role: " + student.role;
+
+document.getElementById(
+"studentAvailability"
+).innerText =
+"Availability: " + student.availability;
+
+
+// TEAM LOOKUP
+
+let teams =
+JSON.parse(
+localStorage.getItem("teams")
+) || [];
+
+let foundTeam = null;
+let teamIndex = -1;
+
+teams.forEach((team,index)=>{
+
+if(
+
+team.some(member =>
+
+member.studentId ===
+student.studentId
+
+)
+
+){
+
+foundTeam = team;
+teamIndex = index;
+
+}
+
+});
+
+if(foundTeam){
+
+document.getElementById(
+"teamName"
+).innerText =
+"Team " + (teamIndex+1);
+
+let score =
+Math.floor(
+Math.random()*20
+)+80;
+
+document.getElementById(
+"teamScore"
+).innerText =
+"Compatibility Score: "
++ score + "%";
+let teamStatus =
+localStorage.getItem(
+`teamStatus${teamIndex}`
+);
+
+if(teamStatus === "Published"){
+
+document.getElementById(
+"teamStatus"
+).innerText =
+"Status: Published 🌍";
+
+}
+else if(teamStatus === "Approved"){
+
+document.getElementById(
+"teamStatus"
+).innerText =
+"Status: Approved ✅";
+
+}
+else{
+
+document.getElementById(
+"teamStatus"
+).innerText =
+"Status: Pending ⏳";
+
+}
+
+let memberList =
+document.getElementById(
+"teamMembers"
+);
+
+memberList.innerHTML = "";
+
+foundTeam.forEach(member=>{
+
+memberList.innerHTML +=
+
+`<li>
+${member.name}
+(${member.role})
+</li>`;
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
