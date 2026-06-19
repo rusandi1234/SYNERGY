@@ -1,95 +1,113 @@
 let teams =
 JSON.parse(
-  localStorage.getItem("teams")
+localStorage.getItem("teams")
 ) || [];
 
 let container =
 document.getElementById(
-  "conflictContainer"
+"conflictContainer"
 );
-if (!container) {
-  console.error("conflictContainer element not found");
+
+if(teams.length === 0){
+
+container.innerHTML = `
+<div class="conflict-card">
+<h2>No Teams Found</h2>
+<p>Generate teams first.</p>
+</div>
+`;
+
+}else{
+
+teams.forEach((team,index)=>{
+
+let conflicts = [];
+
+let leaders =
+team.filter(
+student =>
+student.role === "Team Leader"
+);
+
+if(leaders.length > 1){
+
+conflicts.push(
+"Multiple Team Leaders"
+);
+
 }
 
-if (teams.length === 0) {
-  container.innerHTML = `
-    <div class="conflict-card">
-      <h2>No Teams Found</h2>
-      <p>
-        Generate teams first.
-      </p>
-    </div>
-  `;
-  return;
+let developers =
+team.filter(
+student =>
+student.role === "Developer"
+);
+
+if(developers.length === 0){
+
+conflicts.push(
+"No Developer Assigned"
+);
+
 }
 
-teams.forEach((team, index) => {
-  let conflicts = [];
+let roles =
+team.map(
+student => student.role
+);
 
-  let leaders =
-    team.filter(
-      student =>
-      student.role === "Team Leader"
-    );
+let uniqueRoles =
+[...new Set(roles)];
 
-  if (leaders.length > 1) {
-    conflicts.push(
-      "Multiple Team Leaders"
-    );
-  }
+if(uniqueRoles.length < roles.length){
 
-  let developers =
-    team.filter(
-      student =>
-      student.role === "Developer"
-    );
+conflicts.push(
+"Duplicate roles detected"
+);
 
-  if (developers.length === 0) {
-    conflicts.push(
-      "No Developer Assigned"
-    );
-  }
+}
 
-  let roles =
-    team.map(
-      student => student.role
-    );
+if(conflicts.length === 0){
 
-  let uniqueRoles =
-    [...new Set(roles)];
+container.innerHTML += `
 
-  if (uniqueRoles.length < roles.length) {
-    conflicts.push(
-      "Duplicate roles detected"
-    );
-  }
+<div class="success-card">
 
-  if (conflicts.length === 0) {
-    container.innerHTML += `
-      <div class="success-card">
-        <h2>
-          ✅ Team ${index + 1}
-        </h2>
-        <p>
-          No conflicts detected.
-        </p>
-      </div>
-    `;
-  } else {
-    container.innerHTML += `
-      <div class="conflict-card">
-        <h2>
-          ⚠ Team ${index + 1}
-        </h2>
-        <ul>
-          ${conflicts.map(
-            c => `<li>${c}</li>`
-          ).join("")}
-        </ul>
-        <p>
-          Severity: High
-        </p>
-      </div>
-    `;
-  }
+<h2>✅ Team ${index+1}</h2>
+
+<p>No conflicts detected.</p>
+
+</div>
+
+`;
+
+}else{
+
+container.innerHTML += `
+
+<div class="conflict-card">
+
+<h2>⚠ Team ${index+1}</h2>
+
+<ul>
+
+${conflicts.map(
+c => `<li>${c}</li>`
+).join("")}
+
+</ul>
+
+<p>
+Severity:
+${conflicts.length >= 2 ? "High 🔴" : "Medium 🟠"}
+</p>
+
+</div>
+
+`;
+
+}
+
 });
+
+}
