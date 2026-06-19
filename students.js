@@ -182,3 +182,26 @@ displayStudents();
 }
 
 displayStudents();
+function generateTeams(){
+
+if(students.length === 0){
+
+alert("No students available!");
+
+return;
+
+}
+
+// Shuffle students first
+students.sort(() => Math.random() - 0.5);
+
+let teams = [];
+
+for(let i=0;i<students.length;i+=4){
+
+let team =
+students.slice(i,i+4);
+
+teams.push(team);
+
+}
