@@ -7,10 +7,8 @@ let container =
 document.getElementById(
   "conflictContainer"
 );
-
 if (!container) {
   console.error("conflictContainer element not found");
-  return;
 }
 
 if (teams.length === 0) {
