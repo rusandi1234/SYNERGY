@@ -11,6 +11,7 @@ document.getElementById(
 if(teams.length === 0){
 
 container.innerHTML = `
+
 <div class="team-card">
 
 <h2>No Teams Generated</h2>
@@ -23,7 +24,7 @@ click Generate Teams.
 </div>
 `;
 
-}
+}else{
 
 teams.forEach((team,index)=>{
 
@@ -45,13 +46,16 @@ availabilityScore +
 roleScore +
 workloadScore;
 
+let status =
+localStorage.getItem(
+`teamStatus${index}`
+) || "Pending";
+
 container.innerHTML += `
 
 <div class="team-card">
 
-<h2>
-🏆 Team ${index+1}
-</h2>
+<h2>🏆 Team ${index+1}</h2>
 
 <p>
 Compatibility Score:
@@ -60,45 +64,13 @@ Compatibility Score:
 
 <hr>
 
-<p>
-🎯 Skill Diversity:
-${skillScore}/40
-</p>
-
-<p>
-📅 Availability Match:
-${availabilityScore}/30
-</p>
-
-<p>
-👥 Role Balance:
-${roleScore}/20
-</p>
-
-<p>
-⚖️ Workload Balance:
-${workloadScore}/10
-</p>
-
-<hr>
-
 <p id="status${index}">
-
 Status:
-${
-localStorage.getItem(
-`teamStatus${index}`
-) === "Published"
+${status === "Published"
 ? "Published 🌍"
-:
-localStorage.getItem(
-`teamStatus${index}`
-) === "Approved"
+: status === "Approved"
 ? "Approved ✅"
-:
-"Pending ⏳"
-}
-
+: "Pending ⏳"}
 </p>
 
 <button
@@ -133,6 +105,8 @@ ${student.name} - ${student.role}
 
 });
 
+}
+
 function approveTeam(index){
 
 localStorage.setItem(
@@ -142,8 +116,12 @@ localStorage.setItem(
 
 document.getElementById(
 `status${index}`
-).innerHTML =
+).innerText =
 "Status: Approved ✅";
+
+alert(
+`Team ${index+1} approved!`
+);
 
 }
 
@@ -156,7 +134,11 @@ localStorage.setItem(
 
 document.getElementById(
 `status${index}`
-).innerHTML =
+).innerText =
 "Status: Published 🌍";
+
+alert(
+`Team ${index+1} published!`
+);
 
 }
