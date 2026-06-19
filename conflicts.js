@@ -100,4 +100,16 @@ Severity: High
 
 }
 
-});
+});let roles =
+team.map(student => student.role);
+
+let uniqueRoles =
+[...new Set(roles)];
+
+if(uniqueRoles.length < roles.length){
+
+conflicts.push(
+"Duplicate roles detected"
+);
+
+}
