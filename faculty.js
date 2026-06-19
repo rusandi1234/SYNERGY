@@ -46,6 +46,17 @@ loadStudents();
 
 function generateTeams(){
 
+if(students.length === 0){
+
+alert("No students available!");
+
+return;
+
+}
+
+// Shuffle students
+students.sort(() => Math.random() - 0.5);
+
 let teams = [];
 
 for(let i=0;i<students.length;i+=4){
@@ -74,6 +85,7 @@ alert(
 window.location =
 "teams.html";
 
+}
 }
 function logoutFaculty(){
 
